@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Quiz, Timed quiz">
+    <title>Quiz Project</title>
+    <link rel="stylesheet" href="./assets/css/Quiz.css">
+</head>
+
+<body>
+
+    <!-- Start Screen -->
+    <div class="startScreen">
+        <div class="card">
+            <div class="ready">Ready,</div>
+            <div class="set">set,</div>
+            <div class="quiz">QUIZ</div>
+            <div class="red-line" aria-hidden="true"></div>
+            <div class="settings-text">settings</div>
+
+            <div class="start-btn" tabindex="0" role="button">
+                <div class="start-bg">
+                <div class="start-text">START</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="card settingsCard hidden">
+        <div class="settings-panel" aria-label="Settings Panel">
+            <div class="heading">Quiz Settings</div>
+
+            <form id="quizSettings" class="settings-form" autocomplete="off" novalidate>
+
+                <label class="label" for="numQuestions">Number of Questions</label>
+                <input class="input" id="numQuestions" name="numQuestions" type="number" min="1" value="10">
+
+                <label class="label" for="numOptions">Number of Options per Question</label>
+                <select class="input select" id="numOptions" name="numOptions">
+                    <option>2</option>
+                    <option>3</option>
+                    <option selected>4</option>
+                    <option>5</option>
+                </select>
+
+                <label class="label" for="timeLimit">Time Limit (minutes)</label>
+                <input class="input" id="timeLimit" name="timeLimit" type="number" min="1" value="1">
+
+                <label class="label" for="difficulty">Difficulty Level</label>
+                <select class="input select" id="difficulty" name="difficulty">
+                    <option>Easy</option>
+                    <option selected>Medium</option>
+                    <option>Hard</option>
+                </select>
+
+                <label class="label" for="category">Category</label>
+                <input class="input" id="category" name="category" type="text">
+                
+                <div class="formBtnContainer">
+                    <button class="formBtn cancelBtn">cancel</button>
+                    <button class="formBtn saveBtn">save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quiz Area -->
+    <div class="parentDiv retro-quiz-page hidden">
+
+        <div class="timerContainer">
+            <span id="timer">00:00:00</span>
+        </div>
+        <div class="quest"></div>
+        <div class="answers"></div>
+
+    </div>
+
+    <!-- stats page is now avalaible -->
+     <div class="card statsPage hidden">
+        <div class="scoreCard">
+            <div id="percentGradient">
+                <div></div>
+            </div>
+        </div>
+     </div>
+
+     <!-- we need a alert in necessary places -->
+      <div class="alertPage hidden">
+        <div class="alertDiv"></div>
+      </div>
+
+    <script src="./assets/js/Quiz.js"></script>
+</body>
+</html>
