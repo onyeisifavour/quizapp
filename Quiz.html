@@ -35,7 +35,10 @@
             <form id="quizSettings" class="settings-form" autocomplete="off" novalidate>
 
                 <label class="label" for="numQuestions">Number of Questions</label>
+                <div id="cancelInfoDiv">
                 <input class="input" id="numQuestions" name="numQuestions" type="number" min="1" value="10">
+                <div id="cancelInfo">*cancel buttons resets styles to default</div>
+                </div>
 
                 <label class="label" for="numOptions">Number of Options per Question</label>
                 <select class="input select" id="numOptions" name="numOptions">
@@ -56,11 +59,11 @@
                 </select>
 
                 <label class="label" for="category">Category</label>
-                <input class="input" id="category" name="category" type="text">
+                <input class="input" id="category" name="category" type="text" value="maths">
                 
                 <div class="formBtnContainer">
-                    <button class="formBtn cancelBtn">cancel</button>
                     <button class="formBtn saveBtn">save</button>
+                    <button class="formBtn cancelBtn">cancel</button>
                 </div>
             </form>
         </div>

@@ -1,411 +1,448 @@
-/* ------------- fonts ------------- */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@700&display=swap');
-
-/* ------------- reset ------------- */
-* { box-sizing: border-box; margin: 0; padding: 0; user-select: none;}
-
-/* ------------- base / page layout ------------- */
-html, body { height: 100%; }
-body {
-  font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  background: #F1FCFF; /* rgb(241,252,255) */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  min-height: 100vh;
-  color: #111;
-}
-
-/* center container for quiz area (hidden until quiz starts) */
-.parentDiv {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  background: #fff;
-  padding: 6% 5%;
-  border-radius: 12px;
-  box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
-  max-width: 920px;
-  width: calc(100% - 40px);
-}
-
-/* helper class to hide sections until JS reveals them */
-.hidden { display: none !important; }
-
-/* ---------- question ---------- */
-.quest {
-  font-size: clamp(28px, 6vw, 70px); /* responsive */
-  text-align: center;
-  padding-bottom: 12px;
-  line-height: 1.05;
-}
-
-/* ---------- answers layout ---------- */
-.answers{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-  width: 100%;
-  margin: 0 auto;
-  padding: 8px 0;
-}
-
-/* each answer option */
-.answer-option {
-  padding: 18px 22px;
-  border: 1px solid rgb(158,157,157);
-  border-radius: 8px;
-  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
-  min-width: 160px;
-  max-width: 42%;
-  text-align: center;
-  cursor: pointer;
-  background: #fff;
-  user-select: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-  outline: none;
-}
-
-/* responsive sizing on small screens: make options full width */
-@media (max-width: 560px) {
-  .answer-option { max-width: 100%; min-width: auto; }
-}
-
-/* hover and focus */
-.answer-option:hover,
-.answer-option:focus {
-  transform: translateY(-4px) scale(1.02);
-  background-color: rgba(192,192,192,0.15);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-}
-
-/* keyboard-visible focus */
-.answer-option:focus-visible { box-shadow: 0 0 0 4px rgba(0,76,153,0.12); transform: translateY(-2px); }
-
-/* correct / wrong feedback */
-.answer-option.correct { background: #2ecc71; color: #fff; border-color: #27ae60; }
-.answer-option.wrong   { background: #e74c3c; color: #fff; border-color: #c0392b; }
-
-/* keep slight margin between options on large screens */
-.answers .answer-option { margin: 6px; }
-
-/* ---------- start screen & Figma card ---------- */
-/* make .card visible by default and use .hidden to hide things */
-.card {
-  display: block;
-  width: min(368px, 92vw);
-  height: 521px;
-  position: relative;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-}
-
-/* start screen container (keeps previous layout) */
-.startScreen { display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
-
-/* clickable feel for start button */
-.start-btn { cursor: pointer; }
-.start-btn:focus-visible { outline: 3px solid rgba(0,76,153,0.18); border-radius: 8px; }
-
-/* card visual (keeps Figma feel) */
-/* Ready / set lines and quiz word (keeps positioning from your design) */
-.ready,
-.set {
-  width: 280px;
-  height: 69px;
-  left: 44px;
-  position: absolute;
-  text-align: center;
-  color: #000;
-  font-size: 68px;
-  font-family: "Gorditas", serif;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.ready  { top: 95px; }
-.set    { top: 173px; }
-
-/* QUIZ big word */
-.quiz {
-  position: absolute;
-  left: 56px;
-  top: 260px;
-  text-align: center;
-  color: #000;
-  font-size: 96px;
-  font-family: "Gorditas", serif;
-  font-weight: 700;
-  line-height: 1;
-}
-
-/* red decorative line */
-.red-line {
-  width: 121px;
-  height: 10px;
-  left: 133px;
-  top: 365px;
-  position: absolute;
-  background: #FF0000;
-  border-radius: 4px;
-}
-
-/* settings small label */
-.settings-text {
-  cursor: pointer;
-  left: 56px;
-  top: 460px;
-  position: absolute;
-  text-align: center;
-  color: rgba(0, 0, 0, 1);
-  font-size: 12px;
-  text-decoration: underline;
-  transition: 0.1s;
-}
-.settings-text:hover{
-  scale: 1.05;
-}
-
-/* START button block */
-.start-btn {
-  width: 294px;
-  height: 42px;
-  position: absolute;
-  top: 415px;
-  left: 42px;
-}
-
-.start-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #004C99;
-  border-radius: 50px;
-  transition: 0.1s ease-in-out;
-}
-.start-bg:hover{
-  background-color: #004386;
-  scale: 1.02;
-}
-
-.start-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 24px;
-  font-weight: 700;
-}
 
 
-/* ---------- settings panel ---------- */
-.settingsCard { /* visible by default; control show/hide with .hidden in HTML/JS */ }
+              /* ------------- fonts ------------- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@700&display=swap');
 
-.settings-panel {
-  width: 368px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  padding-top: 22px;
-}
+        /* ------------- reset ------------- */
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none;}
 
-.heading {
-  width: 198px;
-  height: 38px;
-  text-align: center;
-  color: #004C99;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 38px;
-}
+        /* ------------- base / page layout ------------- */
+        html, body { height: 100%; }
+        body {
+          font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+          background: #F1FCFF; /* rgb(241,252,255) */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          min-height: 100vh;
+          color: #111;
+        }
 
-.label {
-  display:block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #000;
-  margin-top: 6px;
-}
+        /* center container for quiz area (hidden until quiz starts) */
+        .parentDiv {
+          display: flex;
+          position: relative;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          background: #fff;
+          padding: 6% 5%;
+          border-radius: 12px;
+          box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+          max-width: 920px;
+          width: calc(100% - 40px);
+        }
 
-.input {
-  width: 286px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1px solid #ACABAB;
-  padding: 6px 10px;
-  font-size: 14px;
-  background: #fff;
-}
+        /* helper class to hide sections until JS reveals them */
+        .hidden { display: none !important; }
 
-/* slightly smaller input variant */
-.input.small { height: 32px; }
+        /* ---------- question ---------- */
+        .quest {
+          font-size: clamp(28px, 6vw, 70px); /* responsive */
+          text-align: center;
+          padding-bottom: 12px;
+          line-height: 1.05;
+        }
 
-/* remove native arrow on select on some browsers for consistent look */
-.select { appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+        /* ---------- answers layout ---------- */
+        .answers{
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          justify-content: center;
+          width: 100%;
+          margin: 0 auto;
+          padding: 8px 0;
+        }
 
-/* spacing for the form */
-.settings-form { display:flex; flex-direction:column; gap:8px; }
+        /* each answer option */
+        .answer-option {
+          padding: 18px 22px;
+          border: 1px solid rgb(158,157,157);
+          border-radius: 8px;
+          transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+          min-width: 160px;
+          max-width: 42%;
+          text-align: center;
+          cursor: pointer;
+          background: #fff;
+          user-select: none;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+          outline: none;
+        }
+
+        /* responsive sizing on small screens: make options full width */
+        @media (max-width: 560px) {
+          .answer-option { max-width: 100%; min-width: auto; }
+        }
+
+        /* hover and focus */
+        .answer-option:hover,
+        .answer-option:focus {
+          transform: translateY(-4px) scale(1.02);
+          background-color: rgba(192,192,192,0.15);
+          box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+
+        /* keyboard-visible focus */
+        .answer-option:focus-visible { box-shadow: 0 0 0 4px rgba(0,76,153,0.12); transform: translateY(-2px); }
+
+        /* correct / wrong feedback */
+        .answer-option.correct { background: #2ecc71; color: #fff; border-color: #27ae60; }
+        .answer-option.wrong   { background: #e74c3c; color: #fff; border-color: #c0392b; }
+
+        /* keep slight margin between options on large screens */
+        .answers .answer-option { margin: 6px; }
+
+        /* ---------- start screen & Figma card ---------- */
+        /* make .card visible by default and use .hidden to hide things */
+        .card {
+          display: block;
+          width: min(368px, 92vw);
+          height: 521px;
+          position: relative;
+          background: #fff;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+
+        /* start screen container (keeps previous layout) */
+        .startScreen { display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+
+        /* clickable feel for start button */
+        .start-btn { cursor: pointer; }
+        .start-btn:focus-visible { outline: 3px solid rgba(0,76,153,0.18); border-radius: 8px; }
+
+        /* card visual (keeps Figma feel) */
+        /* Ready / set lines and quiz word (keeps positioning from your design) */
+        .ready,
+        .set {
+          width: 280px;
+          height: 69px;
+          left: 44px;
+          position: absolute;
+          text-align: center;
+          color: #000;
+          font-size: 68px;
+          font-family: "Gorditas", serif;
+          font-weight: 700;
+          line-height: 1;
+        }
+
+        .ready  { top: 95px; }
+        .set    { top: 173px; }
+
+        /* QUIZ big word */
+        .quiz {
+          position: absolute;
+          left: 56px;
+          top: 260px;
+          text-align: center;
+          color: #000;
+          font-size: 96px;
+          font-family: "Gorditas", serif;
+          font-weight: 700;
+          line-height: 1;
+        }
+
+        /* red decorative line */
+        .red-line {
+          width: 121px;
+          height: 10px;
+          left: 133px;
+          top: 365px;
+          position: absolute;
+          background: #FF0000;
+          border-radius: 4px;
+        }
+
+        /* settings small label */
+        .settings-text {
+          cursor: pointer;
+          left: 56px;
+          top: 460px;
+          position: absolute;
+          text-align: center;
+          color: rgba(0, 0, 0, 1);
+          font-size: 12px;
+          text-decoration: underline;
+          transition: 0.1s;
+        }
+        .settings-text:hover{
+          scale: 1.05;
+        }
+
+        /* START button block */
+        .start-btn {
+          width: 294px;
+          height: 42px;
+          position: absolute;
+          top: 415px;
+          left: 42px;
+        }
+
+        .start-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: #004C99;
+          border-radius: 50px;
+          transition: 0.1s ease-in-out;
+        }
+        .start-bg:hover{
+          background-color: #004386;
+          scale: 1.02;
+        }
+
+        .start-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 24px;
+          font-weight: 700;
+        }
 
 
-/* ---------- RETRO STYLES: Entire Quiz Page Reversion (Targeting .parentDiv) ---------- */
+        /* ---------- settings panel ---------- */
+        .settingsCard { /* visible by default; control show/hide with .hidden in HTML/JS */ }
 
-/* Applies to: <div class="parentDiv retro-quiz-page hidden">...</div>
-   This safely reverts the look of the quiz questions without affecting 
-   .startScreen or .settingsCard elements.
-*/
+        .settings-panel {
+          width: 368px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 12px;
+          padding-top: 22px;
+        }
 
-/* 1. Revert the main container (.parentDiv) layout and sizing */
-.retro-quiz-page {
-    /* Revert to old sizing/padding */
-    min-width: 350px;
-    height: fit-content;
-    padding: 10% 7%; /* Revert to old percentage padding */
-    box-sizing: border-box; 
-    margin: 0;
+        .heading {
+          width: 198px;
+          height: 38px;
+          text-align: center;
+          color: #004C99;
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 38px;
+        }
 
-    /* Override new max-width/fixed width and gap */
-    max-width: none;
-    width: auto;
-    gap: 0; 
-}
+        .label {
+          display:block;
+          font-size: 14px;
+          font-weight: 600;
+          color: #000;
+          margin-top: 6px;
+        }
 
-/* 2. Revert the Question text (.quest) styling */
-.retro-quiz-page .quest {
-    font-size: 70px; /* Revert to fixed font size */
-    padding-bottom: 25px; /* Revert to old padding */
-    line-height: initial; /* Remove new line-height adjustment */
-}
+        .input {
+          width: 286px;
+          height: 36px;
+          border-radius: 8px;
+          border: 1px solid #ACABAB;
+          padding: 6px 10px;
+          font-size: 14px;
+          background: #fff;
+        }
 
-/* 3. Revert the Answers Container (.answers) layout */
-.retro-quiz-page .answers {
-    display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    flex-direction: row; /* Ensure it stays in a row */
-    justify-content: space-evenly; /* Revert to old spacing */
-    width: 125%; /* Revert to old width that was 125% of the old parentDiv */
-    margin: 0;
-    gap: 0;
-    padding: 0;
-}
+        /* slightly smaller input variant */
+        .input.small { height: 32px; }
 
-/* 4. Revert the individual Answer Options (.answer-option) styling */
-.retro-quiz-page .answer-option {
-    /* Revert padding, border thickness, and border radius */
-    padding: 20px;
-    border: 0.5px solid rgb(158, 157, 157);
-    border-radius: 5px;
-    
-    /* Reset new box shadow and transformation effects */
-    box-shadow: none; 
-    transform: none; 
-    transition: 0.15s; 
-    margin: 0; /* Remove margin/gap from new code */
-    min-width: auto;
-    max-width: none;
-}
+        /* remove native arrow on select on some browsers for consistent look */
+        .select { appearance: none; -webkit-appearance: none; -moz-appearance: none; }
 
-/* 5. Revert the Answer Option hover effect */
-.retro-quiz-page .answer-option:hover {
-    background-color: rgba(192, 192, 192, 0.3);
-    cursor: pointer;
-    scale: 1.05; /* Revert to old scaling effect */
-    transform: none; 
-    box-shadow: none;
-    transition: 0.15s;
-}
-
-.timerContainer {
-  position: absolute;
-  top: 16px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 6px 16px;
-  border-radius: 999px; /* pill */
-
-  background-color: transparent;
-  border: 1.5px solid #004C99; /* calm quiz blue */
-
-  color: #004C99;
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-
-  letter-spacing: 0.06em;
-}
+        /* spacing for the form */
+        .settings-form { display:flex; flex-direction:column; gap:6.5px; }
 
 
-/* .timerContainer{
-  top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  min-width: 100%;
-  min-height: fit-content;
-  padding: 7px;
-  background-color: #FF0000;
-  color: #fff;
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 700;
-  font-size: 20px;
-} */
+        /* ---------- RETRO STYLES: Entire Quiz Page Reversion (Targeting .parentDiv) ---------- */
+
+        /* Applies to: <div class="parentDiv retro-quiz-page hidden">...</div>
+           This safely reverts the look of the quiz questions without affecting 
+           .startScreen or .settingsCard elements.
+        */
+
+        /* 1. Revert the main container (.parentDiv) layout and sizing */
+        .retro-quiz-page {
+            /* Revert to old sizing/padding */
+            min-width: 350px;
+            height: fit-content;
+            padding: 10% 7%; /* Revert to old percentage padding */
+            box-sizing: border-box; 
+            margin: 0;
+        
+            /* Override new max-width/fixed width and gap */
+            max-width: none;
+            width: auto;
+            gap: 0; 
+        }
+
+        /* 2. Revert the Question text (.quest) styling */
+        .retro-quiz-page .quest {
+            font-size: 70px; /* Revert to fixed font size */
+            padding-bottom: 25px; /* Revert to old padding */
+            line-height: initial; /* Remove new line-height adjustment */
+        }
+
+        /* 3. Revert the Answers Container (.answers) layout */
+        .retro-quiz-page .answers {
+            display: flex;
+            flex-wrap: nowrap; /* Prevent wrapping */
+            flex-direction: row; /* Ensure it stays in a row */
+            justify-content: space-evenly; /* Revert to old spacing */
+            width: 125%; /* Revert to old width that was 125% of the old parentDiv */
+            margin: 0;
+            gap: 0;
+            padding: 0;
+        }
+
+        /* 4. Revert the individual Answer Options (.answer-option) styling */
+        .retro-quiz-page .answer-option {
+            /* Revert padding, border thickness, and border radius */
+            padding: 20px;
+            border: 0.5px solid rgb(158, 157, 157);
+            border-radius: 5px;
+
+            /* Reset new box shadow and transformation effects */
+            box-shadow: none; 
+            transform: none; 
+            transition: 0.15s; 
+            margin: 0; /* Remove margin/gap from new code */
+            min-width: auto;
+            max-width: none;
+        }
+
+        /* 5. Revert the Answer Option hover effect */
+        .retro-quiz-page .answer-option:hover {
+            background-color: rgba(192, 192, 192, 0.3);
+            cursor: pointer;
+            scale: 1.05; /* Revert to old scaling effect */
+            transform: none; 
+            box-shadow: none;
+            transition: 0.15s;
+        }
+
+        .timerContainer {
+          position: absolute;
+          top: 16px;
+        
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        
+          padding: 6px 16px;
+          border-radius: 999px; /* pill */
+        
+          background-color: transparent;
+          border: 1.5px solid #004C99; /* calm quiz blue */
+        
+          color: #004C99;
+          font-family: 'Montserrat', system-ui, sans-serif;
+          font-weight: 600;
+          font-size: 14px;
+        
+          letter-spacing: 0.06em;
+        }
 
 
-/*
-====================================
-YOURS COMMENTED OUT
-====================================
-*/
+        /* .timerContainer{
+          top: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          min-width: 100%;
+          min-height: fit-content;
+          padding: 7px;
+          background-color: #FF0000;
+          color: #fff;
+          font-family: 'Roboto Mono', monospace;
+          font-weight: 700;
+          font-size: 20px;
+        } */
 
-/*.timerContainer {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 
-  min-width: 180px;  */    /* prevents width jump */
-  /*padding: 14px 28px;
+        /*
+        ====================================
+        YOURS COMMENTED OUT
+        ====================================
+        */
 
-  background: #111;*/      /* slightly deeper black */
-  /*border-radius: 14px;
+        /*.timerContainer {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
 
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.18),
-    inset 0 0 0 1px rgba(255,255,255,0.04);
-}
+          min-width: 180px;  */    /* prevents width jump */
+          /*padding: 14px 28px;
 
-#timer {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 2.2rem;
-  font-weight: 500;
+          background: #111;*/      /* slightly deeper black */
+          /*border-radius: 14px;
 
-  letter-spacing: 0.18em;*/ /* more controlled than px */
-  /*color: #ffffff;
+          box-shadow:
+            0 8px 24px rgba(0,0,0,0.18),
+            inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
 
-  line-height: 1;*/       /* perfect vertical alignment */
- /* user-select: none;
-}*/
+        #timer {
+          font-family: 'Roboto Mono', monospace;
+          font-size: 2.2rem;
+          font-weight: 500;
 
-.formBtn{
-  display: flex;
-  width: 60px;
-}
+          letter-spacing: 0.18em;*/ /* more controlled than px */
+          /*color: #ffffff;
+
+          line-height: 1;*/       /* perfect vertical alignment */
+         /* user-select: none;
+        }*/
+
+        .formBtnContainer{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .formBtn{
+            width: 286px;
+            height: 30px;
+            border: none;
+            border-radius: 999px;
+            color: #fff;
+            background-color: #004386;
+            font-size: 15px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .formBtn:active {
+            background-color: #2980b9;
+            transform: scale(0.95);
+        }
+
+        .saveBtn:hover{
+            background-color: #073665;
+        }
+
+        .cancelBtn:hover{
+            background-color: #ff0000;
+        }
+
+        #cancelInfo{
+            font-size: 10px;
+        }
+
+        #cancelInfoDiv{
+            display: flex;
+            flex-direction: column;
+        }

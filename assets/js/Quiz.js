@@ -39,7 +39,6 @@ const settingsNumOptions = document.querySelector('#numOptions');
 const settingsTimeLimit = document.querySelector('#timeLimit');
 const settingsDifficulty = document.querySelector('#difficulty');
 const settingsCategory = document.querySelector('#category');
-
 /* ============================
    STATE VARIABLES & DEFAULTS
    ============================ */
@@ -125,13 +124,13 @@ function fillSettingsForm() {
   settingsNumOptions.disabled = false;
   settingsTimeLimit.disabled = false;
   settingsDifficulty.disabled = false;
-  settingsCategory.disabled = false;
+  settingsCategory.disabled = true;
 
   settingsNumQuestions.value = window.quizSettings.numQuestions;
   settingsNumOptions.value = window.quizSettings.numOptions;
   settingsTimeLimit.value = window.quizSettings.timeLimit;
   settingsDifficulty.value = window.quizSettings.difficulty;
-  settingsCategory.value = window.quizSettings.category || '';
+  settingsCategory.value = window.quizSettings.category || 'maths';
 }
 
 function readSettingsFormIntoState() {
@@ -154,7 +153,9 @@ function onSaveSettings(e) {
   saveSettingsToStorage();
   hide(settingsPage);
   showAlert(`Settings saved. ${window.quizSettings.numQuestions} q, ${window.quizSettings.numOptions} opts, ${window.quizSettings.timeLimit} min.`);
-  show(startScreen);
+  setTimeout(() => {
+    show(startScreen)
+  }, 2400);
 }
 
 function onCancelSettings(e) {
@@ -165,6 +166,9 @@ function onCancelSettings(e) {
   fillSettingsForm();
   hide(settingsPage);
   showAlert('Settings reset to defaults.');
+    setTimeout(() => {
+    show(startScreen)
+  }, 2400);
 }
 
 function openSettingsPanel() {
@@ -364,7 +368,9 @@ function endQuiz() {
     '<p>Category: ' + (window.quizSettings.category || 'N/A') + '</p>' +
     '</div>';
 
-  show(statsPage);
+  setTimeout(() => {
+    show(statsPage)
+  }, 2200)
   hide(quizContainer);
   hide(startScreen);
 }
@@ -417,7 +423,7 @@ function showAlert(msg, ms) {
   if (alertDiv) {
     alertDiv.textContent = msg;
     show(alertPage);
-    setTimeout(function () { hide(alertPage); }, ms || 1400);
+    setTimeout(function () { hide(alertPage); }, ms || 2200);
   } else {
     console.log('Alert:', msg);
   }

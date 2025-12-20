@@ -1,0 +1,49 @@
+We start here
+```Js
+function onSaveSettings(e) {
+if (e && e.preventDefault) e.preventDefault();
+readSettingsFormIntoState();
+saveSettingsToStorage();
+hide(settingsPage);
+showAlert(`Settings saved. ${window.quizSettings.numQuestions} q, ${window.quizSettings.numOptions} opts, ${window.quizSettings.timeLimit} min.`);
+setTimeout(() => {
+show(startScreen)
+}, 1400);
+}
+```
+
+
+First we remove the  `hide(settingsPage);` line here, this would be done by a done button we are gonna create here in a function, and give it role. The class we would give it should already have it styles in CSS(this we would do making options for each buttons like: Done, Confirm, Cancel, Wait and the two type of div - the one that holds two button simultaneously). If you notice this would mean that the styles in CSS won't have a matching Html folk until JavaScript create assigns one to it.  We would also ensure to tell the button what and what to hide or show when telling it it role so we can neatly pass it as argument to the alert function
+```Js
+function onSaveSettings(e) {
+if (e && e.preventDefault) e.preventDefault();
+readSettingsFormIntoState();
+saveSettingsToStorage();
+//hide(settingsPage); Removed, not needed
+/* This would also be useful
+msg = `Your settings are saved `
+info = `Your assigned settings has been saved and will persist when next the page loads, click cancel to restore defaults.`
+*/
+/* function to create button using .innerHtml assign
+it class in there and give the button
+it role is created here */
+showAlert(`Settings saved. ${window.quizSettings.numQuestions} q, ${window.quizSettings.numOptions} opts, ${window.quizSettings.timeLimit} min.`);
+setTimeout(() => {
+show(startScreen)
+}, 1400);
+}
+```
+
+Next we move to the alert function and change what it does completely, we make it accept three arguments, the message, info, and button function it does not know what to do with the button function it just calls it in it self, so we would get something like this
+
+```Js
+function showAlert(msg, info, assigner) {
+let msg; let info// we should probably do this outside this function so it is global
+document.querySelector('.alertMsg').textContent = msg //msg will be assigned something in each scenario function E.g msg = `Your settings are saved `
+document.querySelector('.alertInfo2').textContent = info
+// then this "assigner()" or something that makes assigner run like a function, assigner would also equal something - the function handling the button. In each scenario it will equal that scenarion specific fucntion handling it button issue
+}
+```   
+
+
+To the best of my knowledge this is my approach, what do you think.
