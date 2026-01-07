@@ -6,12 +6,13 @@
     <meta name="keywords" content="Quiz, Timed quiz">
     <title>Quiz Project</title>
     <link rel="stylesheet" href="./assets/css/Quiz.css">
+
 </head>
 
 <body>
 
     <!-- Start Screen -->
-    <div class="startScreen">
+    <div class="startScreen hidden">
         <div class="card">
             <div class="ready">Ready,</div>
             <div class="set">set,</div>
@@ -28,7 +29,7 @@
     </div>
 
     <!-- Settings Panel -->
-    <div class="card settingsCard hidden">
+    <div class="card settingsCard">
         <div class="settings-panel" aria-label="Settings Panel">
             <div class="heading">Quiz Settings</div>
 
@@ -89,11 +90,31 @@
         </div>
      </div>
 
-     <!-- we need a alert in necessary places -->
-      <div class="alertPage hidden">
-        <div class="alertDiv"></div>
-      </div>
 
+     <!-- alert System page -->
+
+    <!-- we need a alert in necessary places -->
+     <div class="alertPage hidden">
+       <div class="alertDiv">
+          <div class="alertCard">
+            <div id="closeIcon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+            <div class="alertTitle">
+                Your are saved!
+            </div>
+            <div class="alertMessage">
+                Your assigned settings has been saved and will persist when next the page loads, click cancel to restore defaults.
+            </div>
+            <div class="alertButtons">
+            </div>
+          </div>
+       </div>
+     </div>
+          
     <script src="./assets/js/Quiz.js"></script>
 </body>
 </html>
